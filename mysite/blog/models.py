@@ -9,5 +9,13 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    # Defining a default sort order:
+    class Meta:
+        # ordering with reverse chonological order by adding -
+        ordering = ['-publish']
+        # Indexing database
+        indexes = [
+            models.Index(fields=["-publish"],)
+        ]
     def __str__(self) :
         return f"[{self.title}]"
