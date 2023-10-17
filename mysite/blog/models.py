@@ -11,6 +11,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250)
     body = models.TextField()
+    # Many to one relationship
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
