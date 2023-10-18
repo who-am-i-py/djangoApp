@@ -1,8 +1,16 @@
 from django.db import models
+from django.db.models.query import QuerySet
 # Importing necessary modules :
 from django.utils import timezone
 from django.contrib.auth.models import User
 # Create your models here.
+
+# Creating Model manager
+class PublishManager(models.Manager):
+    def get_queryset(self) :
+        return super().get_queryset()\
+        .filter(status = Post.Status.PUBLISHED)
+
 class Post(models.Model):
     # Status subclass:
     class Status(models.TextChoices):
@@ -18,6 +26,8 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2, choices=Status.choices, default= Status.DRAFT)
     # Defining a default sort order:
+    objects = models.manager()
+    published = PublishManager()
     class Meta:
         # ordering with reverse chonological order by adding -
         ordering = ['-publish']
