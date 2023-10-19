@@ -10,7 +10,10 @@ class PublishManager(models.Manager):
     def get_queryset(self) :
         return super().get_queryset()\
         .filter(status = Post.Status.PUBLISHED)
-
+# Creating Draft manager:
+class DraftManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status = Post.Status.DRAFT)
 class Post(models.Model):
     # Status subclass:
     class Status(models.TextChoices):
@@ -25,9 +28,10 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2, choices=Status.choices, default= Status.DRAFT)
-    # Defining a default sort order:
     objects = models.manager()
     published = PublishManager()
+    drafted = DraftManager()
+    # Defining a default sort order:
     class Meta:
         # ordering with reverse chonological order by adding -
         ordering = ['-publish']
