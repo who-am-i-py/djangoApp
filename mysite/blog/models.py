@@ -28,7 +28,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2, choices=Status.choices, default= Status.DRAFT)
-    objects = models.manager()
+    objects = models.Manager()
     published = PublishManager()
     drafted = DraftManager()
     # Defining a default sort order:
