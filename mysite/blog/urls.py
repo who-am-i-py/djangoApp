@@ -1,9 +1,11 @@
 # Importing necessary modules :
 from django.urls import path
-from .views import post_list, post_detail
+from . import views
 
 app_name = 'blog'
 urlpatterns = [
     # post views here:
+    path('', views.post_list, name="post_list"),
+    path('<int:id>/', views.post_detail, name="post_detail")
 
 ]
